@@ -32,7 +32,7 @@ node {
           "docker service create \
           --name=ees \
           --publish=6000:6000 \
-          scretu/elixir-echo-server:${env.BUILD_ID}"
+          gfarcas/elixir-echo-server:${env.BUILD_ID}"
           """
       }
       catch (Exception e) {
@@ -40,7 +40,7 @@ node {
         sh """
           ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/id_rsa docker@${STAGE_SWARM_MANAGER} \
           "docker service update \
-          --image scretu/elixir-echo-server:${env.BUILD_ID} \
+          --image gfarcas/elixir-echo-server:${env.BUILD_ID} \
           ees"
           """
       }
@@ -69,7 +69,7 @@ node {
             "docker service create \
             --name=ees \
             --publish=6000:6000 \
-            scretu/elixir-echo-server:${env.BUILD_ID}"
+            gfarcas/elixir-echo-server:${env.BUILD_ID}"
             """
         }
         catch (Exception e) {
@@ -77,7 +77,7 @@ node {
           sh """
             ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/id_rsa docker@${PROD_SWARM_MANAGER} \
             "docker service update \
-            --image scretu/elixir-echo-server:${env.BUILD_ID} \
+            --image gfarcas/elixir-echo-server:${env.BUILD_ID} \
             ees"
             """
         }
