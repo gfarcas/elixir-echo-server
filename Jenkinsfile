@@ -19,7 +19,7 @@ node {
 
     stage('Build Docker') {
       docker.withRegistry('https://registry.hub.docker.com/', 'dockerhub') {
-        def customImage = docker.build("gfarcas/elixir-echo-server:${env.BUILD_ID}")
+        def customImage = docker.build("gimsys/elixir-echo-server:${env.BUILD_ID}")
         customImage.push()
       }
     }
@@ -32,7 +32,7 @@ node {
           "docker service create \
           --name=ees \
           --publish=6000:6000 \
-          gfarcas/elixir-echo-server:${env.BUILD_ID}"
+          gimsys/elixir-echo-server:${env.BUILD_ID}"
           """
       }
       catch (Exception e) {
@@ -40,7 +40,7 @@ node {
         sh """
           ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/id_rsa docker@${STAGE_SWARM_MANAGER} \
           "docker service update \
-          --image gfarcas/elixir-echo-server:${env.BUILD_ID} \
+          --image gimsys/elixir-echo-server:${env.BUILD_ID} \
           ees"
           """
       }
@@ -69,7 +69,7 @@ node {
             "docker service create \
             --name=ees \
             --publish=6000:6000 \
-            gfarcas/elixir-echo-server:${env.BUILD_ID}"
+            gimsys/elixir-echo-server:${env.BUILD_ID}"
             """
         }
         catch (Exception e) {
@@ -77,7 +77,7 @@ node {
           sh """
             ssh -o StrictHostKeyChecking=no -i /var/jenkins_home/id_rsa docker@${PROD_SWARM_MANAGER} \
             "docker service update \
-            --image gfarcas/elixir-echo-server:${env.BUILD_ID} \
+            --image gimsys/elixir-echo-server:${env.BUILD_ID} \
             ees"
             """
         }
